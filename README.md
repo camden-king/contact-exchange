@@ -1,3 +1,8 @@
+To you update the info at the top of ContactCard.js and upload required pictures and vcf file to public
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
