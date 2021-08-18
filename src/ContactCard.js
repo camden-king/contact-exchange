@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { contact, firebaseConfig } from "./config";
+
 import { Grid, IconButton, Button, Typography, Box, CssBaseline, responsiveFontSizes, TextField } from "@material-ui/core";
 import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import { blue, yellow } from '@material-ui/core/colors';
@@ -21,46 +23,6 @@ import firebase from "firebase/app";
 import 'firebase/database'
 import 'firebase/analytics'
 import ContactField from "./ContactField";
-
-const contact = {
-  first_name: "Camden", 
-  last_name: "King", 
-  profile_picture: "/profile_pic.jpeg", 
-  fullpage_picture: "/cover_page.jpg", 
-  company: "University of Michigan",
-  position: "Computer Science Engineering",
-  contact_download: "/Camden King.vcf",
-  contactFields: [
-    {
-      id: "phone", 
-      value: "123 456 7890", 
-      export: false, 
-      show: true,
-      href: "tel:123-456-7890"
-    }, 
-    {
-      id: "email", 
-      value: "cnking@umich.edu", 
-      export: false, 
-      show: true,
-      href: "`mailto:cnking@umich.edu`"
-    },
-    {
-      id: "linkedIn", 
-      value: "camdennking", 
-      export: false, 
-      show: true,
-      href: "https://www.linkedin.com/in/camdennking/"
-    }, 
-    {
-      id: "facebook", 
-      value: "camdennking", 
-      export: false, 
-      show: true,
-      href: ""
-    }
-  ]
-}
 
 let theme = createTheme({
   palette: {
@@ -119,17 +81,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// Firebase configuration
-var firebaseConfig = {
-  apiKey: "AIzaSyBft6GY-cxccZE6XX63k3ZqC-FfFV9rnkg",
-  authDomain: "camden-king-contact.firebaseapp.com",
-  databaseURL: "https://camden-king-contact-default-rtdb.firebaseio.com",
-  projectId: "camden-king-contact",
-  storageBucket: "camden-king-contact.appspot.com",
-  messagingSenderId: "747562715024",
-  appId: "1:747562715024:web:841c2e3775f126d33e5515",
-  measurementId: "G-675HXVC705"
-};
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
