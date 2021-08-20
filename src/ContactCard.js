@@ -91,41 +91,7 @@ function ContactCard() {
   const [newContacPhone, setNewContactPhone] = useState()
   const [newContactEmail, setNewContactEmail] = useState()
   const [newContactNote, setNewContactNote] = useState()
-  const [visitorUuid, setVisitorUuid] = useState()
   const [submitted, setSubmitted] = useState(false)
-
-  useEffect(() => {
-    const contactUuid = localStorage.getItem('contactUuid')
-    if (contactUuid){
-      setSubmitted(true)
-    }
-    const visitor = localStorage.getItem('visitorUuid')
-    if (visitor) {
-      setVisitorUuid(visitor)
-    } else {
-      // Get a key for a new visit.
-      var newVisitorKey = firebase.database().ref().child('visitors').push().key;
-
-      // Save visit to localStorage
-      localStorage.setItem('visitorUuid', newVisitorKey);
-      setVisitorUuid(newVisitorKey)
-
-      // Write the new visitors data to the visitors list.
-      var updates = {};
-      updates['/visitors/' + newVisitorKey + '/' + (new Date()).toUTCString()] = "new visitor created";
-      updates['/visitors/' + newVisitorKey + '/from'] = window.location.href;
-      return firebase.database().ref().update(updates);
-    }
-  }, [])
-
-  function handleButtonClick(action) {
-    // Saves the new details to firebase
-    var updates = {};
-    updates['/visitors/' + visitorUuid + '/' + (new Date()).toUTCString()] = action;
-    
-    return firebase.database().ref().update(updates);
-  }
-
 
   function writeNewContact() {
     setSubmitted(true)
@@ -141,12 +107,9 @@ function ContactCard() {
 
     localStorage.setItem('contactUuid', newPostKey);
 
-    // Write the new post's data simultaneously in the posts list and the user's post list.
+    // Write the new post's data to firebase
     var updates = {};
     updates['/contacts/' + newPostKey] = postData;
-    updates['/visitors/' + visitorUuid + '/' + (new Date()).toUTCString()] = "contact submitted";
-    updates['/visitors/' + visitorUuid + '/contact'] = {contactUuid: newPostKey};
-    
     return firebase.database().ref().update(updates);
   }
 
@@ -205,7 +168,7 @@ function ContactCard() {
 
               {/* Download contact to phone & send your contact */}
               <Box m={2}>
-                <Button onClick={() => handleButtonClick("opened vcf card")} href={contact.contact_download} size="large" fullWidth variant="contained" color="secondary">
+                <Button href={contact.contact_download} size="large" fullWidth variant="contained" color="secondary">
                   <ContactsIcon />
                   &nbsp;&nbsp;&nbsp;
                   <b>Add Contact</b>

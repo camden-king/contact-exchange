@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ContactField({details}) {
     const classes = useStyles();
     return (
-        details.show && 
         <>
             <Grid item xs={2}>
                 <IconButton size="medium" className={classes.icon_button} href={`${details.href}`}>
